@@ -1,0 +1,24 @@
+@import '~lato-font/css/lato-font.min.css';
+
+:root {
+    /* titlebar */
+    --titlebar-background: #051522;
+    --titlebar-color: #eee;
+
+    /* app */
+    --app-background: #0c2339;
+    --app-color: #5592bf;
+
+    --content-background: #17334d;
+    --content-color: var(--app-color);
+    --content-shadow: 0 1em 6em rgba(0, 0, 0, 0.8);
+
+    /* part list */
+    --part-title-color: #91bde0;
+    --part-element-background: rgba(0, 0, 0, 0.5);
+    --part-element-color: #4076a3;
+    --part-element-hover-background: rgba(0, 0, 0, 0.1);
+    --part-element-selected-color: #5daae9;
+    --part-element-selected-background: rgba(0, 0, 0, 0.7);
+    --part-element-round-hover-background: rgba(255, 255, 255, 0.15);
+  }

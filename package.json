@@ -1,0 +1,122 @@
+{
+  "name": "synty-sync",
+  "author": "Krzysztof 'Shlizer Hinc <hinc.krzysiek+github@gmail.com>",
+  "version": "1.0.0",
+  "description": "Sync tool for managing SyntyStudios packages from their store.",
+  "main": "./.webpack/main/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "release": "electron-forge publish"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "@emotion/react": "11.11.4",
+    "@emotion/styled": "11.11.0",
+    "@fortawesome/fontawesome-svg-core": "6.5.1",
+    "@fortawesome/free-regular-svg-icons": "6.5.1",
+    "@fortawesome/free-solid-svg-icons": "6.5.1",
+    "@fortawesome/react-fontawesome": "0.2.0",
+    "@mui/material": "5.15.13",
+    "axios": "1.6.8",
+    "electron-json-storage": "4.6.0",
+    "lato-font": "3.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.13.0",
+    "styled-components": "^6.1.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.63",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/electron-devtools-installer": "2.2.0",
+    "@types/react": "^17.0.42",
+    "@types/react-dom": "^17.0.14",
+    "babel-loader": "^8.2.4",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "electron": "^17.2.0",
+    "electron-debug": "^3.2.0",
+    "file-loader": "^6.2.0",
+    "npm-run-all": "^4.1.5",
+    "style-loader": "^3.3.1",
+    "typescript": "^4.6.2",
+    "wait-on": "^6.0.1",
+    "webpack": "^5.70.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Electron starter",
+        "executableName": "electron-starter",
+        "icon": "assets/icon",
+        "extraResource": [
+          "assets"
+        ]
+      },
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack/main.webpack.js",
+            "renderer": {
+              "config": "./webpack/renderer.webpack.js",
+              "entryPoints": [
+                {
+                  "html": "./src/public/main.html",
+                  "js": "./src/front/main/index.tsx",
+                  "name": "main_window",
+                  "preload": {
+                    "js": "./src/back/bridge.ts"
+                  }
+                },
+                {
+                  "html": "./src/public/overlay.html",
+                  "js": "./src/front/overlay/index.tsx",
+                  "name": "overlay_window",
+                  "preload": {
+                    "js": "./src/back/bridge.ts"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      ],
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Electron Starter"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
