@@ -1,0 +1,38 @@
+{
+  "name": "synty-library",
+  "version": "1.0.0",
+  "description": "Local library of Synty asset packs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "node-html-parser": "^9.0.4"
+  },
+  "productName": "Synty Library",
+  "build": {
+    "appId": "local.synty.library",
+    "productName": "Synty Library",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "lib/**",
+      "renderer/**",
+      "assets/**",
+      "package.json"
+    ],
+    "win": {
+      "target": "dir",
+      "icon": "assets/icon.ico"
+    }
+  }
+}

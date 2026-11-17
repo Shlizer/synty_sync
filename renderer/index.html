@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' synty: https:; style-src 'self' 'unsafe-inline'">
+  <title>Synty Library</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Texts come from lib/i18n.js: data-i18n (text), data-i18n-html, data-i18n-title, data-i18n-placeholder. -->
+  <header>
+    <div class="brand">Synty Library</div>
+    <nav id="tabs">
+      <button data-tab="owned" class="active"><span data-i18n="tab.owned">Owned</span> <span id="ownedCount" class="count"></span></button>
+      <button data-tab="catalog"><span data-i18n="tab.catalog">Catalog</span> <span id="catalogCount" class="count"></span></button>
+      <button data-tab="import" data-i18n="tab.import">Import</button>
+    </nav>
+    <div class="actions">
+      <button id="btnCatalog" data-i18n="btn.refreshCatalog" data-i18n-title="btn.refreshCatalog.title">Refresh catalog</button>
+      <button id="btnCheck" class="primary" data-i18n="btn.check" data-i18n-title="btn.check.title">Check versions</button>
+      <button id="btnUpdateAll" class="accent"></button>
+      <button id="btnCancel" data-i18n="btn.cancel" hidden>Cancel</button>
+    </div>
+    <div id="lang" class="lang" data-i18n-title="lang.title"></div>
+  </header>
+
+  <section class="filters">
+    <input id="search" type="search" data-i18n-placeholder="search.placeholder" placeholder="Search...">
+    <div id="cats" class="chips"></div>
+    <div id="statusFilter" class="chips"></div>
+    <div class="spacer"></div>
+    <span id="login" class="login"></span>
+    <span id="meta" class="meta"></span>
+  </section>
+
+  <main>
+    <div id="view-owned" class="grid"></div>
+    <div id="view-catalog" class="grid" hidden></div>
+    <div id="view-import" hidden>
+      <div class="import-head">
+        <p data-i18n-html="import.intro"></p>
+        <button id="btnScan" data-i18n="btn.scan">Scan</button>
+        <button id="btnApply" class="primary" data-i18n="btn.applyImport" disabled>Move selected</button>
+      </div>
+      <table id="importTable"></table>
+    </div>
+  </main>
+
+  <footer>
+    <div id="progress" hidden><div class="bar"><div id="bar"></div></div><span id="progressText"></span></div>
+    <pre id="log"></pre>
+  </footer>
+  <script src="../lib/i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

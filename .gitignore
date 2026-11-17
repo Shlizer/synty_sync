@@ -1,0 +1,28 @@
+# Zależności
+node_modules/
+
+# Wynik electron-buildera
+dist/
+out/
+
+# Logi
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Zrzuty z trybu SYNTY_SHOT i pliki tymczasowe
+*-catalog.png
+*-owned.png
+*.tmp
+
+# Lokalne zmienne środowiskowe
+.env
+.env.*
+
+# System / edytor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
