@@ -1,0 +1,31 @@
+# Checks every pull request and push to main: syntax check + unpacked Windows build.
+# Mark the "build" job as a required status check in the branch ruleset.
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Syntax check
+        shell: bash
+        run: for f in main.js preload.js lib/*.js renderer/*.js; do node --check "$f"; done
+
+      - name: Build (unpacked)
+        run: npx electron-builder --win dir --publish never

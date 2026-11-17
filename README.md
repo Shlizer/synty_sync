@@ -12,7 +12,7 @@
   <img alt="Platform" src="https://img.shields.io/badge/platform-Windows-0078D6">
   <img alt="Electron" src="https://img.shields.io/badge/Electron-44-47848F?logo=electron&logoColor=white">
   <img alt="UI languages" src="https://img.shields.io/badge/UI-English%20%7C%20Polski-26b37a">
-  <img alt="License" src="https://img.shields.io/badge/license-ISC-blue">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-blue">
   <a href="https://github.com/Shlizer/synty_sync/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/Shlizer/synty_sync"></a>
 </p>
 
@@ -178,7 +178,7 @@ Bug reports and pull requests are welcome - please read [CONTRIBUTING.md](CONTRI
 
 ## License
 
-[ISC](https://opensource.org/license/isc-license-txt)
+[MIT](LICENSE) (c) Krzysztof Hinc
 
 ## AI disclosure
 

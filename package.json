@@ -6,8 +6,8 @@
   "scripts": {
     "start": "electron ."
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Krzysztof Hinc",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^44.5.1",
     "electron-builder": "^26.15.3"
@@ -32,7 +32,13 @@
     ],
     "win": {
       "target": "dir",
-      "icon": "assets/icon.ico"
+      "icon": "assets/icon.ico",
+      "artifactName": "Synty-Library-${version}-win-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "Synty-Library-Setup-${version}.${ext}"
     }
   }
 }
