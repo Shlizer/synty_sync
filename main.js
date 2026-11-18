@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { pathToFileURL } = require('url');
 const i18n = require('./lib/i18n');
-const { Store } = require('./lib/store');
+const { Store, samePath } = require('./lib/store');
 const { refreshCatalog } = require('./lib/catalog');
 const { checkOwned } = require('./lib/owned');
 const { downloadOwned } = require('./lib/download');
@@ -22,8 +22,39 @@ function loadSettings() {
   try { Object.assign(settings, JSON.parse(fs.readFileSync(settingsFile(), 'utf8'))); } catch { /* defaults */ }
   // No saved language yet -> follow the system language.
   i18n.setLanguage(settings.lang || i18n.resolveLanguage(app.getLocale()));
+  openLibrary();
+}
+
+function openLibrary() {
   store = new Store(settings.root);
-  store.validateLocal();
+  if (store.validateLocal()) store.save();
+}
+
+// Switches the library folder. An existing library there is opened as is; an empty folder takes over
+// the current pack list and icons, and the old folder becomes an import folder so the Import tab can
+// move the pack files over.
+function changeRoot(next) {
+  const prev = { root: settings.root, store };
+  settings.root = next;
+  try {
+    openLibrary();
+    const hasData = Object.keys(prev.store.data.owned).length || Object.keys(prev.store.data.catalog).length;
+    if (store.loaded) {
+      log('log.rootOpened', { root: next });
+    } else if (hasData) {
+      store.adopt(prev.store);
+      if (!settings.importDirs.some((d) => samePath(d, prev.root))) settings.importDirs.push(prev.root);
+      log('log.rootAdopted', { root: next, prev: prev.root });
+    } else {
+      log('log.rootChanged', { root: next });
+    }
+    saveSettings();
+  } catch (e) {
+    settings.root = prev.root;
+    store = prev.store;
+    log('log.error', { op: opMessage('changeRoot'), error: i18n.errorMessage(e) });
+    console.error(e);
+  }
 }
 const saveSettings = () => fs.writeFileSync(settingsFile(), JSON.stringify(settings, null, 2));
 
@@ -170,9 +201,29 @@ app.whenReady().then(() => {
   ipcMain.handle('openUrl', (_e, u) => { if (/^https:\/\/([a-z0-9-]+\.)?syntystore\.com\//.test(u)) shell.openExternal(u); });
   ipcMain.handle('openRoot', () => shell.openPath(settings.root));
   ipcMain.handle('chooseRoot', async () => {
-    const r = await dialog.showOpenDialog(win, { properties: ['openDirectory', 'createDirectory'], defaultPath: settings.root });
-    if (r.canceled || !r.filePaths[0]) return snapshot();
-    settings.root = r.filePaths[0]; saveSettings(); loadSettings();
+    if (busy) return snapshot();
+    const r = await dialog.showOpenDialog(win, { title: i18n.t('dialog.chooseRoot'), properties: ['openDirectory', 'createDirectory'], defaultPath: settings.root });
+    const next = r.filePaths?.[0];
+    if (!r.canceled && next && !samePath(next, settings.root)) {
+      changeRoot(next);
+      send('state', snapshot());
+    }
+    return snapshot();
+  });
+  ipcMain.handle('addImportDir', async () => {
+    const r = await dialog.showOpenDialog(win, { title: i18n.t('dialog.addImportDir'), properties: ['openDirectory'] });
+    const dir = r.filePaths?.[0];
+    if (!r.canceled && dir && !settings.importDirs.some((d) => samePath(d, dir))) {
+      settings.importDirs.push(dir);
+      saveSettings();
+      send('state', snapshot());
+    }
+    return snapshot();
+  });
+  ipcMain.handle('removeImportDir', (_e, dir) => {
+    settings.importDirs = settings.importDirs.filter((d) => !samePath(d, dir));
+    saveSettings();
+    send('state', snapshot());
     return snapshot();
   });
 

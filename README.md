@@ -87,6 +87,15 @@ The app is written to `dist/win-unpacked/Synty Library.exe`. To build the same i
 
 Clicking a pack image opens its page on the store.
 
+### Changing the library folder
+
+The current folder is shown in the top right corner - click it to open it in Explorer, or click **Change...** to pick another one:
+
+- **A folder that already holds a library** (`library.json`) is simply opened.
+- **An empty folder** takes over the pack list and icons. Pack files are not moved automatically: the previous folder is added to the import folders, so you can move them with **Import -> Scan -> Move selected**. If you move the files yourself, keep the category subfolders - packs are found again by file name.
+
+Import folders are managed on the **Import** tab (**Add folder...**, **x** to remove).
+
 ### Library layout
 
 ```
@@ -119,7 +128,7 @@ Settings are stored in `%APPDATA%\Synty Library\settings.json`:
 | `importDirs` | Extra folders scanned by the importer. |
 | `lang` | UI language (`en` or `pl`). When missing, the system language is used. |
 
-By default `root` is `Documents\Synty` and `importDirs` is empty. The library folder can be changed in the app; `importDirs` only in this file.
+By default `root` is `Documents\Synty` and `importDirs` is empty. Both can be changed in the app, so editing this file is rarely needed.
 
 ## How it works
 

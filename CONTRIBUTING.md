@@ -29,7 +29,7 @@ See the *Development* section of the [README](README.md) for the project layout 
 
 ## Pull requests
 
-1. Fork the repository and create a branch from `main` (`fix/import-matching`, `feat/folder-picker`).
+1. Fork the repository and create a branch from `master` (`fix/import-matching`, `feat/folder-picker`).
 2. Make your change and test it with `npm start`.
 3. Open the pull request and fill in the template. The *Build* check must pass.
 4. Pull requests are squash-merged, so the title becomes the commit message - keep it short and descriptive.

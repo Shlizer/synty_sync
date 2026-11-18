@@ -36,6 +36,11 @@ nav .count { color: var(--muted); font-size: 12px; }
 .spacer { flex: 1; }
 .meta, .login { color: var(--muted); font-size: 12px; }
 .login.bad { color: var(--warn); cursor: pointer; text-decoration: underline; }
+button.small { padding: 2px 8px; font-size: 12px; }
+.root { display: flex; align-items: center; gap: 6px; min-width: 0; }
+button.path { background: none; border: none; padding: 0; font-size: 12px; color: var(--muted); max-width: 360px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: rtl; text-align: left; }
+button.path:hover { color: var(--text); text-decoration: underline; }
 
 main { flex: 1; overflow: auto; padding: 16px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
@@ -59,6 +64,12 @@ main { flex: 1; overflow: auto; padding: 16px; }
 
 .import-head { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
 .import-head p { margin: 0; flex: 1; color: var(--muted); }
+.import-dirs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.dirs { display: flex; flex-wrap: wrap; gap: 6px; }
+.dir { display: flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 99px; padding: 2px 4px 2px 10px; font-size: 12px; }
+.dir button { background: none; border: none; padding: 0 6px; color: var(--muted); line-height: 1; }
+.dir button:hover:not(:disabled) { color: var(--bad); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
 th { color: var(--muted); font-weight: 500; }

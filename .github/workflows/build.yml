@@ -1,11 +1,11 @@
-# Checks every pull request and push to main: syntax check + unpacked Windows build.
+# Checks every pull request and push to master: syntax check + unpacked Windows build.
 # Mark the "build" job as a required status check in the branch ruleset.
 name: Build
 
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [master]
 
 permissions:
   contents: read

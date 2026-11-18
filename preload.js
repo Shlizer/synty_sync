@@ -16,5 +16,7 @@ contextBridge.exposeInMainWorld('api', {
   openUrl: call('openUrl'),
   openRoot: call('openRoot'),
   chooseRoot: call('chooseRoot'),
+  addImportDir: call('addImportDir'),
+  removeImportDir: call('removeImportDir'),
   on: (ch, fn) => ipcRenderer.on(ch, (_e, d) => fn(d)),
 });

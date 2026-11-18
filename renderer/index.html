@@ -31,6 +31,10 @@
     <div class="spacer"></div>
     <span id="login" class="login"></span>
     <span id="meta" class="meta"></span>
+    <span class="root">
+      <button id="btnRoot" class="path" data-i18n-title="root.open"></button>
+      <button id="btnChangeRoot" class="small" data-i18n="btn.changeRoot" data-i18n-title="btn.changeRoot.title">Change...</button>
+    </span>
   </section>
 
   <main>
@@ -41,6 +45,11 @@
         <p data-i18n-html="import.intro"></p>
         <button id="btnScan" data-i18n="btn.scan">Scan</button>
         <button id="btnApply" class="primary" data-i18n="btn.applyImport" disabled>Move selected</button>
+      </div>
+      <div class="import-dirs">
+        <span class="meta" data-i18n="import.dirs">Import folders:</span>
+        <span id="importDirs" class="dirs"></span>
+        <button id="btnAddImportDir" class="small" data-i18n="btn.addImportDir">Add folder...</button>
       </div>
       <table id="importTable"></table>
     </div>

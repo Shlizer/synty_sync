@@ -143,7 +143,24 @@ function renderCatalog() {
   }
 }
 
+function renderImportDirs() {
+  const box = $('#importDirs');
+  box.innerHTML = '';
+  if (!S.importDirs.length) {
+    box.innerHTML = `<span class="meta">${esc(t('import.noDirs'))}</span>`;
+    return;
+  }
+  for (const dir of S.importDirs) {
+    const chip = document.createElement('span');
+    chip.className = 'dir';
+    chip.innerHTML = `<span>${esc(dir)}</span><button title="${esc(t('btn.removeImportDir'))}">x</button>`;
+    chip.querySelector('button').onclick = () => { clearImportRows(); api.removeImportDir(dir); };
+    box.append(chip);
+  }
+}
+
 function renderImport() {
+  renderImportDirs();
   const table = $('#importTable');
   const rows = ui.importRows;
   if (!rows.length) {
@@ -190,7 +207,10 @@ function render() {
   $('#btnUpdateAll').disabled = !!S.busy || !needs.length;
   $('#btnCatalog').disabled = $('#btnCheck').disabled = $('#btnScan').disabled = !!S.busy;
   $('#btnCancel').hidden = S.busy !== 'download';
-  $('#meta').textContent = t('meta', { catalog: fmtDate(S.catalog_at), checked: fmtDate(S.checked_at), root: S.root });
+  $('#meta').textContent = t('meta', { catalog: fmtDate(S.catalog_at), checked: fmtDate(S.checked_at) });
+  // The path is shown right-to-left so a long one is cut at the start; <bdi> keeps its characters in order.
+  $('#btnRoot').innerHTML = `<bdi>${esc(S.root)}</bdi>`;
+  $('#btnChangeRoot').disabled = !!S.busy;
   $('#progress').hidden = !S.busy;
   if (S.busy) $('#progressText').textContent = $('#progressText').textContent || t(`op.${S.busy}`) + '...';
   document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
@@ -272,6 +292,11 @@ $('#btnScan').onclick = async () => {
   log('log.scanDone', { n: ui.importRows.length });
   renderImport();
 };
+// Folder changes make scan results stale.
+const clearImportRows = () => { ui.importRows = []; $('#importTable').innerHTML = ''; };
+$('#btnRoot').onclick = () => api.openRoot();
+$('#btnChangeRoot').onclick = async () => { clearImportRows(); await api.chooseRoot(); };
+$('#btnAddImportDir').onclick = async () => { clearImportRows(); await api.addImportDir(); };
 $('#btnApply').onclick = async () => {
   const picks = [...document.querySelectorAll('#importTable input[data-i]:checked')].map((c) => ui.importRows[+c.dataset.i]);
   if (!picks.length) return;
